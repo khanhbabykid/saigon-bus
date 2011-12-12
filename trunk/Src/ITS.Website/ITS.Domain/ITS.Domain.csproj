@@ -50,6 +50,10 @@
     <Compile Include="Entities\BusStation.cs" />
     <Compile Include="Helpers\GeometryHelper.cs" />
     <Compile Include="Models\Bus\AddIntermediatePointViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\AddBusMovementViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\BusMovementsViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\BusStationListViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteBusMovementViewModel.cs" />
     <Compile Include="Models\Bus\BusRouteInfoViewModel.cs" />
     <Compile Include="Models\Bus\EditBusViewModel.cs" />
     <Compile Include="Models\Bus\RoadSessionViewModel.cs" />

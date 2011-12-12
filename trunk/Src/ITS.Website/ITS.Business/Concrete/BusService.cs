@@ -9,7 +9,7 @@ using ITS.Domain.Entities.Extensions;
 
 namespace ITS.Business.Concrete
 {
-    public class BusService: IBusService
+    public class BusService : IBusService
     {
         private readonly IBusRepository busRepository;
         public BusService(IBusRepository busRepository)
@@ -68,6 +68,56 @@ namespace ITS.Business.Concrete
         public void SaveRoadSession(RoadSession r)
         {
             busRepository.SaveRoadSession(r);
+        }
+
+
+        public IList<BusMovement> GetAllBusMovements(Guid RouteID, bool Direction)
+        {
+            return busRepository.GetAllBusMovements(RouteID, Direction);
+        }
+
+
+        public BusStation GetBusStation(Guid StationID)
+        {
+            return busRepository.GetBusStation(StationID);
+        }
+
+
+        public BusRoute GetBusRoute(Guid RouteID)
+        {
+            return busRepository.GetBusRoute(RouteID);
+        }
+
+
+        public void SaveBusMovement(BusMovement movement)
+        {
+            busRepository.SaveBusMovement(movement);
+        }
+
+
+        public BusMovement GetBusMovement(Guid movementID)
+        {
+            return busRepository.GetBusMovement(movementID);
+        }
+
+
+        public IList<BusStation> GetAllBusStation()
+        {
+            return busRepository.GetAllBusStation();
+        }
+
+        public void InsertBusMovement(BusMovement movement)
+        {
+            busRepository.InsertBusMovement(movement);
+        }
+        public void DeleteBusMovement(Guid MovementId)
+        {
+            busRepository.DeleteBusMovement(MovementId);
+        }
+
+        public string GetRoadNameFromBusStationID(Guid BusStationID)
+        {
+            return busRepository.GetRoadNameFromBusStationID(BusStationID);
         }
     }
 }

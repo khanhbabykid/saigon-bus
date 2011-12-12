@@ -18,6 +18,7 @@ namespace ITS.Domain.Entities
     public class BusMovement
     {
         public Guid ID { get; set; }
+        public Guid RouteID { get; set; }
         public Guid BusStationFrom { get; set; }
         public Guid BusStationTo { get; set; }
         public bool Direction;

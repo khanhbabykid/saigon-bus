@@ -1,0 +1,59 @@
+﻿@model ITS.Domain.Models.Bus.AddIntermediatePointViewModel
+@{
+    ViewBag.Title = "IntermediatePoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    IntermediatePoints</h2>
+<p>
+</p>
+@using (@Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.MovementID)
+    <div class="table_detail">
+        <table border="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr class="title">
+                    <td class="user_name">
+                        Thứ tự
+                    </td>
+                    <td class="date_time">
+                        Latitude
+                    </td>
+                    <td class="aprroval">
+                        Longitude
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                @for (int i = 0; i < Model.PointList.Count; i++)
+                {
+                    <tr class="@(i % 2 == 0 ? "content" : "content bg_colum")">
+                        <td class="user_name left">
+                            @Html.HiddenFor(m => m.PointList[i].ID)
+                            @Html.TextBoxFor(m => m.PointList[i].OrderNumber)
+                        </td>
+                        <td class="date_time">
+                            @Html.TextBoxFor(m => m.PointList[i].lng)
+                        </td>
+                        <td class="aprroval">
+                            @Html.TextBoxFor(m => m.PointList[i].lat)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DeleteIntermediatePoint", new { ID = Model.PointList[i].ID })">
+                                Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p>
+        New Point:<br />
+        <span>Lat: </span>@Html.TextBoxFor(m => m.NewPointLat)<br />
+        <span>Lng: </span>@Html.TextBoxFor(m => m.NewPointLng)<br />
+        <span>Order: </span>@Html.TextBoxFor(m => m.NewPointOrder)
+    </p>
+    <p>
+        <input type="submit" value="Save" /></p>
+}
