@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="barTitle">#00FFFF</color>
+<color name="barunder">#4ba5bf</color>
+<color name="black">#000000</color>
+<color name="white">#FFFFFF</color>
+<color name="red">#FF0000</color>
+<color name="app_background">#fff</color>
+<!--	<color name="light_red">#ba0305</color>-->
+<!--	<color name="dark_red">#9d0c0f</color>-->
+	
+	<color name="dark_red">#ffffff</color>
+	<color name="light_red">#000000</color>
+	<color name="Focus">#fbb184</color>
+	<color name="color_list">#8fc3ec</color>
+	<color name="color_gray">#d0d0d0</color>
+	
+	<color name="color_tab_unselect">#ff7307</color>
+	<color name="color_tab_select">#167ac3</color>
+	
+	<color name="tabbar_unselected_start">#200</color>
+	<color name="tabbar_unselected_end">#000</color>
+	
+	<color name="tabbar_selected_start">@color/app_background</color>
+	<color name="tabbar_selected_end">#ccc</color>
+	
+	<color name="tabbar_press_start">#fff</color>
+	<color name="tabbar_press_end">#000</color>
+	
+<!--	<color name="tabbar_thin_line">#898989</color>-->
+	<color name="tabbar_thin_line1">#ff0000</color>
+	<color name="tabbar_thin_line2">#898989</color>
+	
+	<color name="tabbar_text_selected">#5d5d5d</color>
+	<color name="tabbar_text_unselected">#838183</color>
+	
+	<!-- tab2: BOUQUET screen -->
+	<color name="bouquet_row_selected">#EEEEEE</color>
+	<color name="bouquet_row_unselected">#FFFFFF</color>
+</resources>

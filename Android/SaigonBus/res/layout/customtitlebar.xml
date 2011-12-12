@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	style="@style/TitleBar"
+	android:id = "@+id/layoutTitle">    
+    <TextView  
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"   
+        android:layout_gravity = "left"    
+        android:padding = "5dip" 
+        android:textStyle = "bold"
+        android:text = "Saigon Bus" />   
+        <TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/titleTvRight"		
+			android:layout_centerVertical = "true"			
+			android:layout_alignParentRight = "true"
+			android:layout_marginRight = "4dip"
+			android:text = "12/12/2012"
+		></TextView>      
+</RelativeLayout>
