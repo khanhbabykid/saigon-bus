@@ -22,7 +22,10 @@ namespace ITS.Business.Concrete
             busRepository.TestRepository();
         }
 
-
+        public RoadSession GetRoadSession(Guid ID)
+        {
+            return busRepository.GetRoadSession(ID);
+        }
         public IList<BusRoute> GetAllBusRoutes()
         {
             return busRepository.GetAllBusRoutes();
@@ -36,6 +39,35 @@ namespace ITS.Business.Concrete
         public IList<Point> GetAllStationPositionsOfARouteInOrder(Guid RouteID, Boolean Direction)
         {
             return busRepository.GetAllStationPositionsOfARouteInOrder(RouteID, Direction);
+        }
+        public IList<Point> GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(Guid RouteID, Boolean Direction)
+        {
+            return busRepository.GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(RouteID, Direction);
+        }
+
+        public IList<Point> GetIntermediatePoints(Guid MovementID)
+        {
+            return busRepository.GetIntermediatePoints(MovementID);
+        }
+        public IList<IntermediatePoint> GetIntermediatePoints_2(Guid MovementID)
+        {
+            return busRepository.GetIntermediatePoints_2(MovementID);
+        }
+        public void InsertIntermediatePoint(Guid MovementID, double lat, double lng, int order)
+        {
+            busRepository.InsertIntermediatePoint(MovementID, lat, lng, order);
+        }
+
+
+        public void SaveIntermediatePoint(IntermediatePoint p)
+        {
+            busRepository.SaveIntermediatePoint(p);
+        }
+
+
+        public void SaveRoadSession(RoadSession r)
+        {
+            busRepository.SaveRoadSession(r);
         }
     }
 }

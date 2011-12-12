@@ -13,6 +13,7 @@
 /// <summary></summary>
 /// <summary></summary>
 using System;
+using ITS.Domain.Entities.Extensions;
 namespace ITS.Domain.Entities
 {
     public class RoadSession
@@ -27,8 +28,7 @@ namespace ITS.Domain.Entities
         /// <summary></summary>
         public String Description;
         /// <summary></summary>
-        public void GetRoadName()
-        {
-        }
+        public Point PositionLower { get; set; }
+        public Point PositionUpper { get; set; }
     }
 }

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IBusService.cs" />
     <Compile Include="Concrete\BusService.cs" />
+    <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
