@@ -12,11 +12,14 @@
 
 /// <summary></summary>
 /// <summary></summary>
+using System;
 namespace ITS.Domain.Entities
 {
-    public class Movement
+    public class BusMovement
     {
-        /// <summary></summary>
+        public Guid ID { get; set; }
+        public Guid BusStationFrom { get; set; }
+        public Guid BusStationTo { get; set; }
         public bool Direction;
         /// <summary></summary>
         public int OrderNumber;

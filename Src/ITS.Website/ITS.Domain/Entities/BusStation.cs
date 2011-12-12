@@ -23,7 +23,8 @@ namespace ITS.Domain.Entities
         /// <summary></summary>
         public String StationName;
         /// <summary></summary>
-        public string Position;
+        public float Position_X;
+        public float Position_Y;
         /// <summary></summary>
         public string GetRoadName()
         {

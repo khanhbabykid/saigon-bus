@@ -38,7 +38,7 @@ namespace ITS.Website.Controllers
             {
                 model.Movements1 = BuildMovementString(busService.GetMovementsOfARouteInOrder(model.SelectedRoute, true));
                 model.Movements2 = BuildMovementString(busService.GetMovementsOfARouteInOrder(model.SelectedRoute, false));
-                model.AllStationPostions = busService.GetAllStationPositionsOfARouteInOrder(model.SelectedRoute, true);
+                model.AllStationPostions = busService.GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(model.SelectedRoute, true);
                 if (model.AllStationPostions.Count > 0)
                 {
                     model.MapCenter.lat = model.AllStationPostions.First().lat;

@@ -48,7 +48,11 @@
     <Compile Include="Entities\RoadSession.cs" />
     <Compile Include="Entities\Route.cs" />
     <Compile Include="Entities\BusStation.cs" />
+    <Compile Include="Helpers\GeometryHelper.cs" />
+    <Compile Include="Models\Bus\AddIntermediatePointViewModel.cs" />
     <Compile Include="Models\Bus\BusRouteInfoViewModel.cs" />
+    <Compile Include="Models\Bus\EditBusViewModel.cs" />
+    <Compile Include="Models\Bus\RoadSessionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
