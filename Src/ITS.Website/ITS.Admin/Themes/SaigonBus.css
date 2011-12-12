@@ -1,0 +1,20 @@
+﻿.table_detail table tr.title
+{
+    background: #EEECE1;
+}
+.table_detail table tr.title td
+{
+    font-weight: bold;
+    border-bottom: 1px solid #385D8A;
+    color: #333;
+    text-align: center;
+}
+.bg_colum
+{
+    background: #F2F2F2;
+}
+.OrderNoTextBox
+{
+    width:20px;
+    text-align:center;
+}

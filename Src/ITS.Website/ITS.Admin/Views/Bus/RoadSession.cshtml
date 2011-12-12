@@ -1,0 +1,93 @@
+﻿@model ITS.Domain.Models.Bus.RoadSessionViewModel
+
+@{
+    ViewBag.Title = "RoadSession";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đoạn Đường: @Html.DisplayFor(m=>m.Description)</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Thông tin</legend>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.RoadID)
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.RoadID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RoadID)
+            @Html.ValidationMessageFor(model => model.RoadID)
+        </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddressLower)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AddressLower)
+            @Html.ValidationMessageFor(model => model.AddressLower)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddressUpper)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AddressUpper)
+            @Html.ValidationMessageFor(model => model.AddressUpper)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PositionLower_X)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PositionLower_X)
+            @Html.ValidationMessageFor(model => model.PositionLower_X)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PositionLower_Y)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PositionLower_Y)
+            @Html.ValidationMessageFor(model => model.PositionLower_Y)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PositionUpper_X)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PositionUpper_X)
+            @Html.ValidationMessageFor(model => model.PositionUpper_X)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PositionUpper_Y)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PositionUpper_Y)
+            @Html.ValidationMessageFor(model => model.PositionUpper_Y)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

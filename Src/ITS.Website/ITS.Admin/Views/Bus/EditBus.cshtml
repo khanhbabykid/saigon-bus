@@ -1,0 +1,13 @@
+﻿@model ITS.Domain.Models.Bus.EditBusViewModel
+
+@{
+    ViewBag.Title = "EditBus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditBus</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m=>m.RouteID)
+
+}

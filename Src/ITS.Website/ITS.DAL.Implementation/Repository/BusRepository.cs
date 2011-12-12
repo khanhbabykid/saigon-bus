@@ -59,6 +59,47 @@ namespace ITS.DAL.Implementation.Repository
             }
             return r;
         }
+        public BusStation GetBusStation(Guid ID)
+        {
+            OpenConnection();
+            BusStation r = new BusStation();
+            string sqlcmd = "Select ID, RoadSessionID, StationName,  ST_X(S.Position::geometry) as Position_X, ST_Y(S.Position::geometry) as Position_Y from BusStation S where ID=:ID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", ID);
+                using (NpgsqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        r.ID = Guid.Parse(dr["ID"].ToString());
+                        r.RoadSessionID = Guid.Parse(dr["RoadSessionID"].ToString());
+                        r.Position_X = float.Parse(dr["Position_X"].ToString());
+                        r.Position_Y = float.Parse(dr["Position_Y"].ToString());
+                        r.StationName = dr["StationName"].ToString();
+                    }
+                }
+            }
+            return r;
+        }
+        public BusRoute GetBusRoute(Guid ID)
+        {
+            OpenConnection();
+            BusRoute r = new BusRoute();
+            string sqlcmd = "Select RouteID, RouteName from BusRoute S where RouteID=:ID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", ID);
+                using (NpgsqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        r.RouteID = Guid.Parse(dr["RouteID"].ToString());
+                        r.RouteName = dr["RouteName"].ToString();
+                    }
+                }
+            }
+            return r;
+        }
         #endregion
         public IList<BusRoute> GetAllBusRoutes()
         {
@@ -328,14 +369,16 @@ namespace ITS.DAL.Implementation.Repository
                 command.Parameters.Add("Direction", Direction);
                 using (NpgsqlDataReader dr = command.ExecuteReader())
                 {
-                    dr.Read();
-                    list.Add(GetPositionFromBusStationID(Guid.Parse(dr["BusStationFrom"].ToString())));
-                    //Add diem giua
-                    foreach (Point p in GetIntermediatePoints(Guid.Parse(dr["ID"].ToString())))
+                    if (dr.Read())
                     {
-                        list.Add(p);
+                        list.Add(GetPositionFromBusStationID(Guid.Parse(dr["BusStationFrom"].ToString())));
+                        //Add diem giua
+                        foreach (Point p in GetIntermediatePoints(Guid.Parse(dr["ID"].ToString())))
+                        {
+                            list.Add(p);
+                        }
+                        list.Add(GetPositionFromBusStationID(Guid.Parse(dr["BusStationTo"].ToString())));
                     }
-                    list.Add(GetPositionFromBusStationID(Guid.Parse(dr["BusStationTo"].ToString())));
 
                     while (dr.Read())
                     {
@@ -489,6 +532,98 @@ namespace ITS.DAL.Implementation.Repository
                 command.Parameters.Add("AddressLower", r.AddressLower);
                 command.Parameters.Add("AddressUpper", r.AddressUpper);
                 command.Parameters.Add("Description", r.Description);
+                command.ExecuteNonQuery();
+            }
+        }
+        #endregion
+
+        #region Bus Station
+        
+        public IList<BusStation> GetAllBusStation()
+        {
+            IList<BusStation> list = new List<BusStation>();
+            BusStation station = new BusStation();
+            OpenConnection();
+            string sqlcmd = string.Format("select ID, RoadSessionID, StationName, ST_X(Position::geometry) as Position_X, ST_Y(Position::geometry) as Position_Y from BusStation");
+            NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn);
+
+
+            NpgsqlDataReader dr = command.ExecuteReader();
+            while (dr.Read())
+            {
+                station = new BusStation()
+                {
+                    ID = Guid.Parse(dr["ID"].ToString()),
+                    RoadSessionID = Guid.Parse(dr["RoadSessionID"].ToString()),
+                    StationName = dr["StationName"].ToString(),
+                    Position_X = float.Parse(dr["Position_X"].ToString()),
+                    Position_Y = float.Parse(dr["Position_Y"].ToString())
+                };
+                list.Add(station);
+            }
+            return list;
+
+        }
+        #endregion
+
+        #region Bus Movement
+        public void SaveBusMovement(BusMovement movement)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("Update BusMovement set OrderNumber=:OrderNumber where ID= :ID");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", movement.ID);
+                command.Parameters.Add("OrderNumber", movement.OrderNumber);
+                command.ExecuteNonQuery();
+            }
+        }
+        public BusMovement GetBusMovement(Guid movementID)
+        {
+            OpenConnection();
+            BusMovement r = new BusMovement();
+            string sqlcmd = "Select ID, RouteID,BusStationFrom, BusStationTo,Direction, OrderNumber from BusMovement where ID=:ID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", movementID);
+                using (NpgsqlDataReader dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        r.ID = Guid.Parse(dr["ID"].ToString());
+                        r.RouteID = Guid.Parse(dr["RouteID"].ToString());
+                        r.BusStationFrom = Guid.Parse(dr["BusStationFrom"].ToString());
+                        r.BusStationTo = Guid.Parse(dr["BusStationTo"].ToString());
+                        r.Direction = bool.Parse(dr["Direction"].ToString());
+                        r.OrderNumber = int.Parse(dr["OrderNumber"].ToString());
+                    }
+                }
+            }
+            return r;
+        }
+        public void InsertBusMovement(BusMovement movement)
+        {
+            OpenConnection();
+            string sqlcmd = "insert into BusMovement(ID,RouteID,BusStationFrom,BusStationTo,Direction,OrderNumber) values(:ID, :RouteID,:BusStationFrom, :BusStationTo,:Direction ,:OrderNumber)";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", Guid.NewGuid());
+                command.Parameters.Add("RouteID", movement.RouteID);
+                command.Parameters.Add("BusStationFrom", movement.BusStationFrom);
+                command.Parameters.Add("BusStationTo", movement.BusStationTo);
+                command.Parameters.Add("Direction", movement.Direction);
+                command.Parameters.Add("OrderNumber", movement.OrderNumber);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteBusMovement(Guid MovementId)
+        {
+            OpenConnection();
+            string sqlcmd = "Delete from BusMovement where ID = :ID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", MovementId);
                 command.ExecuteNonQuery();
             }
         }

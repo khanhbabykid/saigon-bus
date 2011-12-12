@@ -1,0 +1,53 @@
+﻿@model ITS.Domain.Models.Bus.Admin.AddBusMovementViewModel
+@{
+    ViewBag.Title = "AddBusMovement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    AddBusMovement</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.RouteID)
+    <div class="table_detail">
+        <table border="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <td class="user_name">
+                        Từ
+                    </td>
+                    <td class="date_time">
+                        @Html.DropDownListFor(model => Model.SelectedStationFrom, Model.StationFromSelectList)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="user_name">
+                        Đến
+                    </td>
+                    <td class="date_time">
+                        @Html.DropDownListFor(model => Model.SelectedStationTo, Model.StationToSelectList)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="user_name">
+                        Thứ tự
+                    </td>
+                    <td class="date_time">
+                        @Html.EditorFor(model => model.OrderNumber)
+                        @Html.ValidationMessageFor(model => model.OrderNumber)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </div>
+    
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

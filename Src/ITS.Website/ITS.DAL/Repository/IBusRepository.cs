@@ -11,11 +11,14 @@ namespace ITS.DAL.Repository
     {
         void TestRepository();
         RoadSession GetRoadSession(Guid ID);
+        BusStation GetBusStation(Guid ID);
+        BusRoute GetBusRoute(Guid ID);
         IList<BusRoute> GetAllBusRoutes();
         IList<string> GetMovementsOfARouteInOrder(Guid RouteID, Boolean Direction);
         IList<Point> GetAllStationPositionsOfARouteInOrder(Guid RouteID, Boolean Direction);
         IList<Point> GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(Guid RouteID, Boolean Direction);
         IList<BusMovement> GetAllBusMovements(Guid RouteID, bool Direction);
+        string GetRoadNameFromBusStationID(Guid BusStationID);
 
         IList<Point> GetIntermediatePoints(Guid MovementID);
         IList<IntermediatePoint> GetIntermediatePoints_2(Guid MovementID);
@@ -23,5 +26,17 @@ namespace ITS.DAL.Repository
 
         void SaveIntermediatePoint(IntermediatePoint p);
         void SaveRoadSession(RoadSession r);
+
+        #region Bus Station
+        IList<BusStation> GetAllBusStation();
+        #endregion
+
+        #region Bus Movement
+        void SaveBusMovement(BusMovement movement);
+        BusMovement GetBusMovement(Guid movementID);
+        void InsertBusMovement(BusMovement movement);
+        void DeleteBusMovement(Guid MovementId);
+        #endregion
+
     }
 }

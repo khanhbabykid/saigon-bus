@@ -1,0 +1,13 @@
+﻿@model ITS.Domain.Models.Bus.BusRouteInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Xe bus</h2>
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(model => Model.SelectedRoute, Model.RouteSelectList)
+
+    <input id="btnSubmit" value="Edit" type="submit" />
+}
