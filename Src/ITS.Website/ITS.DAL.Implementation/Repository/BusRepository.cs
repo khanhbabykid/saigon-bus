@@ -538,7 +538,7 @@ namespace ITS.DAL.Implementation.Repository
         #endregion
 
         #region Bus Station
-        
+
         public IList<BusStation> GetAllBusStation()
         {
             IList<BusStation> list = new List<BusStation>();
@@ -628,5 +628,128 @@ namespace ITS.DAL.Implementation.Repository
             }
         }
         #endregion
+
+
+        public void SaveBusRoute(BusRoute busRoute)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("Update BusRoute set RouteName=:RouteName where RouteID= :ID");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", busRoute.RouteID);
+                command.Parameters.Add("RouteName", busRoute.RouteName);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void InsertBusRoute(BusRoute busRoute)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("Insert into BusRoute(RouteID, RouteName) values(:ID, :RouteName)");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", Guid.NewGuid());
+                command.Parameters.Add("RouteName", busRoute.RouteName);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteBusRoute(Guid routeID)
+        {
+            OpenConnection();
+            const string sqlcmd = "delete from BusRoute where RouteID= :ID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.AddWithValue("ID", routeID);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
+        public IList<Road> GetAllRoads()
+        {
+            IList<Road> list = new List<Road>();
+            Road station = new Road();
+            OpenConnection();
+            string sqlcmd = string.Format("select * from Road");
+            NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn);
+
+
+            NpgsqlDataReader dr = command.ExecuteReader();
+            while (dr.Read())
+            {
+                station = new Road()
+                {
+                    RoadID = Guid.Parse(dr["RoadID"].ToString()),
+                    RoadName = dr["RoadName"].ToString()
+                };
+                list.Add(station);
+            }
+            return list;
+        }
+
+        public void SaveRoad(Road road)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("Update Road set RoadName=:RoadName where RoadID= :ID");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.AddWithValue("ID", road.RoadID);
+                command.Parameters.AddWithValue("RoadName", road.RoadName);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void InsertRoad(Road road)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("Insert into Road(RoadID, RoadName) values(:ID, :RoadName)");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.AddWithValue("ID", Guid.NewGuid());
+                command.Parameters.AddWithValue("RoadName", road.RoadName);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteRoad(Guid roadID)
+        {
+            OpenConnection();
+            string sqlcmd = string.Format("delete from Road where RoadID= :ID");
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("ID", roadID);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
+        public IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID)
+        {
+            IList<RoadSession> rs = new List<RoadSession>();
+            OpenConnection();
+            string sqlcmd = "Select ID,AddressLower,AddressUpper,RoadID,Description,ST_X(PositionLower::geometry) as PositionLower_X,ST_Y(PositionLower::geometry) as PositionLower_Y,ST_X(PositionUpper::geometry) as PositionUpper_X, ST_Y(PositionUpper::geometry) as PositionUpper_Y from RoadSession where RoadId=:RoadID";
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.Add("RoadId", roadID);
+                using (NpgsqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        rs.Add(new RoadSession()
+                        {
+                            ID = Guid.Parse(dr["ID"].ToString()),
+                            AddressLower = int.Parse(dr["AddressLower"].ToString()),
+                            AddressUpper = int.Parse(dr["AddressUpper"].ToString()),
+                            RoadID = Guid.Parse(dr["RoadID"].ToString()),
+                            Description = dr["Description"].ToString(),
+                            PositionLower = new Point() { lng = float.Parse(dr["PositionLower_X"].ToString()), lat = float.Parse(dr["PositionLower_Y"].ToString()) },
+                            PositionUpper = new Point() { lng = float.Parse(dr["PositionUpper_X"].ToString()), lat = float.Parse(dr["PositionUpper_Y"].ToString()) }
+                        });
+                    }
+                }
+            }
+            return rs;
+        }
     }
 }

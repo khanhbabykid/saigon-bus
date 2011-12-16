@@ -37,5 +37,16 @@ namespace ITS.Business.Abstract
         void InsertBusMovement(BusMovement movement);
         void DeleteBusMovement(Guid MovementId);
         #endregion
+
+        void SaveBusRoute(BusRoute busRoute);
+        void InsertBusRoute(BusRoute busRoute);
+        void DeleteBusRoute(Guid routeID);
+
+        IList<Road> GetAllRoads();
+        void SaveRoad(Road road);
+        void InsertRoad(Road road);
+        void DeleteRoad(Guid roadID);
+
+        IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID);
     }
 }

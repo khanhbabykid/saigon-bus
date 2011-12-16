@@ -1,0 +1,17 @@
+﻿@model ITS.Domain.Models.Bus.Admin.DeleteBusRouteViewModel
+@{
+    ViewBag.Title = "DeleteBusRoute";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    DeleteBusRoute</h2>
+<h3>
+    Bạn có chắc chắn muốn xóa tuyến xe này khỏi hệ thống không?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(model => model.RouteID)
+        <input type="submit" value="Xóa" />
+        @Html.ActionLink("Quay lại danh sách tuyến xe", "BusRouteList")
+    </p>
+}

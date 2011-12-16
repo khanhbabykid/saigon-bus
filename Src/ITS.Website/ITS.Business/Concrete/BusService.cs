@@ -119,5 +119,48 @@ namespace ITS.Business.Concrete
         {
             return busRepository.GetRoadNameFromBusStationID(BusStationID);
         }
+
+
+        public void SaveBusRoute(BusRoute busRoute)
+        {
+            busRepository.SaveBusRoute(busRoute);
+        }
+
+        public void InsertBusRoute(BusRoute busRoute)
+        {
+            busRepository.InsertBusRoute(busRoute);
+        }
+        public void DeleteBusRoute(Guid routeID)
+        {
+            busRepository.DeleteBusRoute(routeID);
+        }
+
+
+        public IList<Road> GetAllRoads()
+        {
+            return busRepository.GetAllRoads();
+        }
+
+
+        public void SaveRoad(Road road)
+        {
+            busRepository.SaveRoad(road);
+        }
+
+        public void InsertRoad(Road road)
+        {
+            busRepository.InsertRoad(road);
+        }
+
+        public void DeleteRoad(Guid roadID)
+        {
+            busRepository.DeleteRoad(roadID);
+        }
+
+
+        public IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID)
+        {
+            return busRepository.GetAllRoadSessionOfARoad(roadID);
+        }
     }
 }
