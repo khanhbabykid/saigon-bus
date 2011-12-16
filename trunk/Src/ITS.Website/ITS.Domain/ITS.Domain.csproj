@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -49,14 +50,19 @@
     <Compile Include="Entities\Route.cs" />
     <Compile Include="Entities\BusStation.cs" />
     <Compile Include="Helpers\GeometryHelper.cs" />
-    <Compile Include="Models\Bus\AddIntermediatePointViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\AddIntermediatePointViewModel.cs" />
     <Compile Include="Models\Bus\Admin\AddBusMovementViewModel.cs" />
     <Compile Include="Models\Bus\Admin\BusMovementsViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\BusRouteListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\BusStationListViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\RoadSessionListViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteRoadViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\RoadListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteBusMovementViewModel.cs" />
-    <Compile Include="Models\Bus\BusRouteInfoViewModel.cs" />
-    <Compile Include="Models\Bus\EditBusViewModel.cs" />
-    <Compile Include="Models\Bus\RoadSessionViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteBusRouteViewModel.cs" />
+    <Compile Include="Models\Bus\Website\BusRouteInfoViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\EditBusViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\RoadSessionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
