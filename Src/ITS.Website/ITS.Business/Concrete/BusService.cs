@@ -6,6 +6,7 @@ using ITS.Business.Abstract;
 using ITS.DAL.Repository;
 using ITS.Domain.Entities;
 using ITS.Domain.Entities.Extensions;
+using ITS.Domain.Models.Bus.Website;
 
 namespace ITS.Business.Concrete
 {
@@ -172,7 +173,10 @@ namespace ITS.Business.Concrete
         {
             return busRepository.GetAllRoadSessionOfARoad(roadID);
         }
-
+        public RoadSession GetFirstMatchRoadSessionFromAddress(int AddressNumber, string StreetName)
+        {
+            return busRepository.GetFirstMatchRoadSessionFromAddress(AddressNumber, StreetName);
+        }
         public void InsertRoadSession(RoadSession roadSession)
         {
             busRepository.InsertRoadSession(roadSession);
@@ -195,6 +199,55 @@ namespace ITS.Business.Concrete
         public void DeleteBusStation(Guid stationID)
         {
             busRepository.DeleteBusStation(stationID);
+        }
+        public IList<BusStation> GetNearestStations(Point p, int count)
+        {
+            return busRepository.GetNearestStations(p, count);
+        }
+        #endregion
+
+        #region Helper
+        public Point GetPositionFromAddress(int AddressNumber, string StreetName)
+        {
+            return busRepository.GetPositionFromAddress(AddressNumber, StreetName);
+        }
+        #endregion
+
+        #region Find Bus
+        public IList<BusRoute> FindPath_OneRoute(Guid StationID_Src, Guid StationID_Dst)
+        {
+            return busRepository.BusRoutesBetween2Stations(StationID_Src, StationID_Dst);
+        }
+
+        public IList<Path2RoutesModel> FindPath_2Routes(Guid StationID_Src, Guid StationID_Dst)
+        {
+            IList<Path2RoutesModel> result = new List<Path2RoutesModel>();
+            IList<BusRoute> RoutesThroughSrc = busRepository.BusRoutesThroughAStation(StationID_Src);
+            IList<BusRoute> RoutesThroughDst = busRepository.BusRoutesThroughAStation(StationID_Dst);
+            IList<BusStation> s1;
+            IList<BusStation> s2;
+            IEnumerable<BusStation> common;
+            foreach (BusRoute r1 in RoutesThroughSrc)
+            {
+                s1 = busRepository.BusStationsOfARoute(r1.RouteID);
+                foreach (BusRoute r2 in RoutesThroughDst)
+                {
+                    s2 = busRepository.BusStationsOfARoute(r2.RouteID);
+                    common = s1.Intersect(s2);
+                    if (common.Count() > 0)
+                    {
+                        result.Add(new Path2RoutesModel()
+                        {
+                            Station_Src = busRepository.GetBusStation(StationID_Src),
+                            BusRoute1 = r1,
+                            IntermediateStation = common.First(),
+                            BusRoute2 = r2,
+                            Station_Dst = busRepository.GetBusStation(StationID_Dst)
+                        });
+                    }
+                }
+            }
+            return result;
         }
         #endregion
     }

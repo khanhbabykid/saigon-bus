@@ -31,10 +31,14 @@ namespace ITS.DAL.Implementation.Repository
         {
             Point p = new Point();
             IList<RoadSession> ss = GetRoadSessionFromAddress(AddressNumber, StreetName);
-            RoadSession selected = ss.First<RoadSession>();
-            float fraction = (float)(AddressNumber - selected.AddressLower) / (selected.AddressUpper - selected.AddressLower);
-            p = InterpolatePoint(selected.PositionLower, selected.PositionUpper, fraction);
-            return p;
+            if (ss.Count > 0)
+            {
+                RoadSession selected = ss.First<RoadSession>();
+                float fraction = (float)(AddressNumber - selected.AddressLower) / (selected.AddressUpper - selected.AddressLower);
+                p = InterpolatePoint(selected.PositionLower, selected.PositionUpper, fraction);
+                return p;
+            }
+            else return null;
         }
         private Point InterpolatePoint(Point point, Point point_2, float fraction)
         {
@@ -338,6 +342,31 @@ namespace ITS.DAL.Implementation.Repository
             }
             return list;
         }
+        public IList<BusStation> GetNearestStations(Point p, int count)
+        {
+            IList<BusStation> list = new List<BusStation>();
+            OpenConnection();
+            string sqlcmd = string.Format("SELECT ID,RoadSessionID,StationName,ST_X(Position::geometry) as X, ST_Y(Position::geometry) as Y  FROM BusStation order by ST_Distance(Position, 'POINT({0} {1})') limit :count", p.lng, p.lat);
+            using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
+            {
+                command.Parameters.AddWithValue("count", count);
+                using (NpgsqlDataReader dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        list.Add(new BusStation()
+                        {
+                            ID = Guid.Parse(dr["ID"].ToString()),
+                            RoadSessionID = Guid.Parse(dr["RoadSessionID"].ToString()),
+                            StationName = dr["StationName"].ToString(),
+                            Position_X = float.Parse(dr["X"].ToString()),
+                            Position_Y = float.Parse(dr["Y"].ToString())
+                        });
+                    }
+                }
+            }
+            return list;
+        }
         public Point GetPositionFromBusStationID(Guid BusStationID)
         {
             OpenConnection();
@@ -357,14 +386,14 @@ namespace ITS.DAL.Implementation.Repository
             }
             return point;
         }
-        public IList<BusStation> BusStationsOfARoute(BusRoute s)
+        public IList<BusStation> BusStationsOfARoute(Guid routeID)
         {
             IList<BusStation> list = new List<BusStation>();
             OpenConnection();
-            string sqlcmd = string.Format("select distinct S.ID, S.RoadSessionID, S.StationName,  ST_X(S.Position::geometry) as X, ST_Y(S.Position::geometry) as Y from BusStation S, BusMovement M where (S.ID = MBusStationFrom or S.ID = MBusStationTo) and M.RouteID = :RouteID");
+            string sqlcmd = "select distinct S.ID, S.RoadSessionID, S.StationName,  ST_X(S.Position::geometry) as X, ST_Y(S.Position::geometry) as Y from BusStation S, BusMovement M where (S.ID = M.BusStationFrom or S.ID = M.BusStationTo) and M.RouteID = :RouteID";
             using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
             {
-                command.Parameters.AddWithValue("RouteID", s.RouteID);
+                command.Parameters.AddWithValue("RouteID", routeID);
                 using (NpgsqlDataReader dr = command.ExecuteReader())
                 {
                     while (dr.Read())
@@ -547,7 +576,7 @@ namespace ITS.DAL.Implementation.Repository
         {
             IList<BusRoute> list = new List<BusRoute>();
             OpenConnection();
-            string sqlcmd = string.Format("select distinct R.RouteID, R.RouteName from BusRoute R, BusMovement M where R.RouteID = M.RouteID and (BusStationFrom = :StationID or BusStationTo = :StationID)");
+            string sqlcmd = "select distinct R.RouteID, R.RouteName from BusRoute R, BusMovement M where R.RouteID = M.RouteID and (BusStationFrom = :StationID or BusStationTo = :StationID)";
             using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
             {
                 command.Parameters.AddWithValue("StationID", stationID);
@@ -567,9 +596,18 @@ namespace ITS.DAL.Implementation.Repository
         }
         public IList<BusRoute> BusRoutesBetween2Stations(Guid s1, Guid s2)
         {
-            IList<BusRoute> list1 = BusRoutesThroughAStation(s1);
-            IList<BusRoute> list2 = BusRoutesThroughAStation(s2);
-            return list1.Intersect(list2).ToList<BusRoute>();
+            IList<BusRoute> result = new List<BusRoute>();
+            List<BusRoute> list1 = BusRoutesThroughAStation(s1).ToList();
+            List<BusRoute> list2 = BusRoutesThroughAStation(s2).ToList();
+            //result =  list1.Intersect<BusRoute>(list2).ToList<BusRoute>();
+            foreach (BusRoute r in list1)
+            {
+                if (list2.Contains(r))
+                {
+                    result.Add(r);
+                }
+            }
+            return result;
         }
         public void SaveBusRoute(BusRoute busRoute)
         {
@@ -762,27 +800,38 @@ namespace ITS.DAL.Implementation.Repository
             }
             return rs;
         }
-        public IList<RoadSession> GetRoadSessionFromAddressNumberAndRoad(int AddressNumber, Road road)
+        public IList<RoadSession> GetRoadSessionFromAddressNumberAndRoad(int AddressNumber, Guid roadID)
         {
             IList<RoadSession> rs = new List<RoadSession>();
             OpenConnection();
-            string sqlcmd = "Select * from RoadSession where AddressLower<= :Address AND AddressUpper>= :Address and RoadId=:RoadID";
+            string sqlcmd = "Select ID, RoadID, AddressLower, AddressUpper, Description, ST_X(S.PositionLower::geometry) as PositionLower_X, ST_Y(S.PositionLower::geometry) as PositionLower_Y, ST_X(S.PositionUpper::geometry) as PositionUpper_X, ST_Y(S.PositionUpper::geometry) as PositionUpper_Y from RoadSession S where AddressLower<= :Address AND AddressUpper>= :Address and RoadId=:RoadID";
             using (NpgsqlCommand command = new NpgsqlCommand(sqlcmd, conn))
             {
                 command.Parameters.AddWithValue("Address", AddressNumber);
-                command.Parameters.AddWithValue("RoadId", road.RoadID);
+                command.Parameters.AddWithValue("RoadId", roadID);
                 using (NpgsqlDataReader dr = command.ExecuteReader())
                 {
+                    RoadSession r = new RoadSession();
                     while (dr.Read())
                     {
-                        rs.Add(new RoadSession()
-                        {
-                            ID = Guid.Parse(dr["ID"].ToString()),
-                            AddressLower = int.Parse(dr["AddressLower"].ToString()),
-                            AddressUpper = int.Parse(dr["AddressUpper"].ToString()),
-                            RoadID = Guid.Parse(dr["RoadID"].ToString()),
-                            Description = dr["Description"].ToString()
-                        });
+                        r.ID = Guid.Parse(dr["ID"].ToString());
+                        r.RoadID = Guid.Parse(dr["RoadId"].ToString());
+                        r.AddressLower = int.Parse(dr["AddressLower"].ToString());
+                        r.AddressUpper = int.Parse(dr["AddressUpper"].ToString());
+                        r.Description = dr["Description"].ToString();
+                        r.PositionLower = new Point();
+                        if (!String.IsNullOrEmpty(dr["PositionLower_X"].ToString()))
+                            r.PositionLower.lng = float.Parse(dr["PositionLower_X"].ToString());
+                        if (!String.IsNullOrEmpty(dr["PositionLower_Y"].ToString()))
+                            r.PositionLower.lat = float.Parse(dr["PositionLower_Y"].ToString());
+
+                        r.PositionUpper = new Point();
+                        if (!String.IsNullOrEmpty(dr["PositionUpper_X"].ToString()))
+                            r.PositionUpper.lng = float.Parse(dr["PositionUpper_X"].ToString());
+                        if (!String.IsNullOrEmpty(dr["PositionUpper_Y"].ToString()))
+                            r.PositionUpper.lat = float.Parse(dr["PositionUpper_Y"].ToString());
+
+                        rs.Add(r);
                     }
                 }
             }
@@ -817,8 +866,17 @@ namespace ITS.DAL.Implementation.Repository
         {
             IList<RoadSession> rs = new List<RoadSession>();
             Road road = GetRoad(StreetName);
-            rs = GetRoadSessionFromAddressNumberAndRoad(AddressNumber, road);
+            rs = GetRoadSessionFromAddressNumberAndRoad(AddressNumber, road.RoadID);
             return rs;
+        }
+        public RoadSession GetFirstMatchRoadSessionFromAddress(int AddressNumber, string StreetName)
+        {
+            Road road = GetRoad(StreetName);
+            IList<RoadSession> sessions = GetRoadSessionFromAddressNumberAndRoad(AddressNumber, road.RoadID);
+            if (sessions.Count > 0)
+                return GetRoadSessionFromAddressNumberAndRoad(AddressNumber, road.RoadID).First();
+            else
+                return null;
         }
         public void SaveRoadSession(RoadSession r)
         {

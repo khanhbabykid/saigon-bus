@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ITS.Domain.Entities;
 using ITS.Domain.Entities.Extensions;
+using ITS.Domain.Models.Bus.Website;
 
 namespace ITS.Business.Abstract
 {
@@ -55,6 +56,7 @@ namespace ITS.Business.Abstract
 
         #region Road Session
         IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID);
+        RoadSession GetFirstMatchRoadSessionFromAddress(int AddressNumber, string StreetName);
         void InsertRoadSession(RoadSession roadSession);
         void DeleteRoadSession(Guid roadSessionID);
         #endregion
@@ -62,6 +64,15 @@ namespace ITS.Business.Abstract
         #region Bus Station
         void InsertBusStation(BusStation busStation);
         void DeleteBusStation(Guid stationID);
+        IList<BusStation> GetNearestStations(Point p, int count);
+        #endregion
+
+        #region Helper
+        Point GetPositionFromAddress(int AddressNumber, string StreetName);
+        #endregion
+        #region Find Bus
+        IList<BusRoute> FindPath_OneRoute(Guid StationID_Src, Guid StationID_Dst);
+        IList<Path2RoutesModel> FindPath_2Routes(Guid StationID_Src, Guid StationID_Dst);
         #endregion
     }
 }

@@ -17,9 +17,12 @@ namespace ITS.Domain.Entities
 {
     public class BusRoute
     {
-        /// <summary></summary>
         public Guid RouteID;
-        /// <summary></summary>
         public String RouteName;
+
+        public override bool Equals(object obj)
+        {
+            return this.RouteID.Equals(((BusRoute)obj).RouteID);
+        }
     }
 }

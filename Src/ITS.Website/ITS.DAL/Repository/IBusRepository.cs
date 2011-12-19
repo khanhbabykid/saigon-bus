@@ -37,6 +37,7 @@ namespace ITS.DAL.Repository
         BusRoute GetBusRoute(Guid ID);
         IList<BusRoute> GetAllBusRoutes();
         IList<BusRoute> BusRoutesThroughAStation(Guid stationID);
+        IList<BusRoute> BusRoutesBetween2Stations(Guid s1, Guid s2);
         #endregion
 
         #region Road
@@ -48,6 +49,7 @@ namespace ITS.DAL.Repository
         #endregion
         #region Road Session
         IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID);
+        RoadSession GetFirstMatchRoadSessionFromAddress(int AddressNumber, string StreetName);
         void InsertRoadSession(RoadSession roadSession);
         void DeleteRoadSession(Guid roadSessionID);
         RoadSession GetRoadSession(Guid ID);
@@ -58,8 +60,15 @@ namespace ITS.DAL.Repository
         BusStation GetBusStation(Guid ID);
         void InsertBusStation(BusStation busStation);
         void DeleteBusStation(Guid stationID);
+        IList<BusStation> GetNearestStations(Point p, int count);
         IList<Point> GetAllStationPositionsOfARouteInOrder(Guid RouteID, Boolean Direction);
         IList<Point> GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(Guid RouteID, Boolean Direction);
+        IList<BusStation> BusStationsOfARoute(Guid routeID);
         #endregion
+
+        #region Helper
+        Point GetPositionFromAddress(int AddressNumber, string StreetName);
+        #endregion
+
     }
 }
