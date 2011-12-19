@@ -64,11 +64,15 @@
     <Compile Include="Models\Bus\Admin\RoadListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteBusMovementViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteBusRouteViewModel.cs" />
+    <Compile Include="Models\Bus\Mobile\RouteInfoModel.cs" />
     <Compile Include="Models\Bus\Website\BusRouteInfoViewModel.cs" />
     <Compile Include="Models\Bus\Admin\EditBusViewModel.cs" />
     <Compile Include="Models\Bus\Admin\RoadSessionViewModel.cs" />
     <Compile Include="Models\Bus\Website\BusStationDetailViewModel.cs" />
+    <Compile Include="Models\Bus\Website\Path1RouteModel.cs" />
     <Compile Include="Models\Bus\Website\FindBusRouteViewModel.cs" />
+    <Compile Include="Models\Bus\Website\Path2RoutesModel.cs" />
+    <Compile Include="Models\Bus\Website\UserPositionInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
