@@ -338,6 +338,21 @@
   <ItemGroup>
     <Content Include="Views\Bus\RoadSessionList.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bus\AddRoadSession.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bus\AddBusStation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bus\DeleteRoadSession.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bus\DeleteBusStation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bus\DeleteIntermediatePoint.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

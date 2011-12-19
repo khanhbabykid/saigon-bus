@@ -184,10 +184,10 @@ namespace ITS.Admin.Controllers
                 AddressLower = roadSession.AddressLower,
                 AddressUpper = roadSession.AddressUpper,
                 Description = roadSession.Description,
-                PositionLower_X = roadSession.PositionLower.lat,
-                PositionLower_Y = roadSession.PositionLower.lng,
-                PositionUpper_X = roadSession.PositionUpper.lat,
-                PositionUpper_Y = roadSession.PositionUpper.lng
+                PositionLower_X = roadSession.PositionLower.lng,
+                PositionLower_Y = roadSession.PositionLower.lat,
+                PositionUpper_X = roadSession.PositionUpper.lng,
+                PositionUpper_Y = roadSession.PositionUpper.lat
             };
             return model;
         }
@@ -202,8 +202,11 @@ namespace ITS.Admin.Controllers
         }
         public ActionResult RoadSessionList(Guid ID)
         {
-            RoadSessionListViewModel model = new RoadSessionListViewModel();
-            model.RoadSessionList = BuildRoadSessionListViewModel(busService.GetAllRoadSessionOfARoad(ID));
+            RoadSessionListViewModel model = new RoadSessionListViewModel()
+            {
+                RoadSessionList = BuildRoadSessionListViewModel(busService.GetAllRoadSessionOfARoad(ID)),
+                RoadID = ID
+            };
             return View(model);
         }
 
@@ -227,17 +230,74 @@ namespace ITS.Admin.Controllers
                     };
                     busService.SaveRoadSession(rs);
                 }
+
                 return RedirectToAction("RoadSessionList");
             }
             return View(model);
         }
+
+        public ActionResult AddRoadSession(Guid ID)
+        {
+            RoadSessionViewModel model = new RoadSessionViewModel();
+            model.RoadID = ID;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddRoadSession(FormCollection collection)
+        {
+            RoadSessionViewModel model = new RoadSessionViewModel();
+            if (TryUpdateModel<RoadSessionViewModel>(model))
+            {
+                /*Insert new session*/
+                RoadSession nrs = new RoadSession()
+                {
+                    ID = Guid.NewGuid(),
+                    RoadID = model.RoadID,
+                    AddressLower = model.AddressLower,
+                    AddressUpper = model.AddressUpper,
+                    Description = model.Description,
+                    PositionLower = new Point() { lng = model.PositionLower_X, lat = model.PositionLower_Y },
+                    PositionUpper = new Point() { lng = model.PositionUpper_X, lat = model.PositionUpper_Y }
+                };
+                busService.InsertRoadSession(nrs);
+                /*End - Insert new session*/
+
+                return RedirectToAction("RoadSessionList", new { ID = model.RoadID });
+            }
+            return View(model);
+        }
+
+        public ActionResult DeleteRoadSession(Guid ID)
+        {
+            RoadSession roadSession = busService.GetRoadSession(ID);
+            DeleteRoadSessionViewModel model = new DeleteRoadSessionViewModel()
+            {
+                RoadSessionID = ID,
+                RoadID = roadSession.RoadID
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteRoadSession(FormCollection collection)
+        {
+            DeleteRoadSessionViewModel model = new DeleteRoadSessionViewModel();
+            if (TryUpdateModel<DeleteRoadSessionViewModel>(model))
+            {
+                busService.DeleteRoadSession(model.RoadSessionID);
+                return RedirectToAction("RoadSessionList", new { ID = model.RoadID });
+            }
+            return View(model);
+        }
         #endregion
+
+        #region Intermediate Point
         public ActionResult IntermediatePoints(Guid ID)
         {
             AddIntermediatePointViewModel model = new AddIntermediatePointViewModel()
             {
                 MovementID = ID,
-                PointList = busService.GetIntermediatePoints_2(ID)
+                PointList = busService.GetIntermediatePoints_2(ID).OrderBy(x => x.OrderNumber).ToList()
             };
             return View(model);
         }
@@ -258,8 +318,29 @@ namespace ITS.Admin.Controllers
             }
             return RedirectToAction("IntermediatePoints");
         }
+        public ActionResult DeleteIntermediatePoint(Guid ID)
+        {
+            IntermediatePoint point = busService.IntermediatePoint(ID);
+            DeleteIntermediatePointViewModel model = new DeleteIntermediatePointViewModel()
+            {
+                MovementID = point.BusMovementID,
+                IntermediatePointID = ID
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult DeleteIntermediatePoint(FormCollection collection)
+        {
+            DeleteIntermediatePointViewModel model = new DeleteIntermediatePointViewModel();
+            if (TryUpdateModel<DeleteIntermediatePointViewModel>(model))
+            {
+                busService.DeleteIntermediatePoint(model.IntermediatePointID);
+                return RedirectToAction("IntermediatePoints", new { ID = model.MovementID });
+            }
+            return View(model);
+        }
+        #endregion
 
-        
 
         public ActionResult BusMovements(Guid ID)
         {
@@ -274,6 +355,10 @@ namespace ITS.Admin.Controllers
             BusMovementsViewModel model = new BusMovementsViewModel();
             if (TryUpdateModel<BusMovementsViewModel>(model))
             {
+                if (model.Movements == null)
+                {
+                    return RedirectToAction("BusMovements");
+                }
                 BusMovement movement;
                 foreach (BusMovementModel m in model.Movements)
                 {
@@ -313,7 +398,6 @@ namespace ITS.Admin.Controllers
             model.StationToSelectList = new SelectList(BuildStationSelectList(), "Value", "Text");
             return View(model);
         }
-
         [HttpPost]
         public ActionResult AddBusMovement(FormCollection collection)
         {
@@ -375,11 +459,36 @@ namespace ITS.Admin.Controllers
 
         }
 
-
+        #region Bus Station
         public ActionResult BusStationList()
         {
+            BusStationListViewModel model = new BusStationListViewModel()
+            {
+                StationList = BuildStationModel(busService.GetAllBusStation())
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult BusStationList(FormCollection collection)
+        {
             BusStationListViewModel model = new BusStationListViewModel();
-            model.StationList = BuildStationModel(busService.GetAllBusStation());
+            if (TryUpdateModel<BusStationListViewModel>(model))
+            {
+                BusStation station;
+                foreach (BusStationModel s in model.StationList)
+                {
+                    station = new BusStation()
+                    {
+                        ID = s.ID,
+                        Position_X = s.Position_X,
+                        Position_Y = s.Position_Y,
+                        RoadSessionID = s.RoadSessionID,
+                        StationName = s.StationName
+                    };
+                    busService.SaveBusStation(station);
+                }
+                return RedirectToAction("BusStationList");
+            }
             return View(model);
         }
         private IList<BusStationModel> BuildStationModel(IList<BusStation> stations)
@@ -389,13 +498,81 @@ namespace ITS.Admin.Controllers
             {
                 list.Add(new BusStationModel()
                 {
-                    BusStation = s,
+                    ID = s.ID,
+                    StationName = s.StationName,
+                    Position_X = s.Position_X,
+                    Position_Y = s.Position_Y,
+                    RoadSessionID = s.RoadSessionID,
                     StreetName = busService.GetRoadNameFromBusStationID(s.ID)
                 });
             }
-            return list;
+            return list.OrderBy(x => x.StreetName).ToList();
         }
+        public ActionResult AddBusStation()
+        {
+            AddBusStationViewModel model = new AddBusStationViewModel();
+            ViewBag.Roads = new SelectList(RoadSelectList(), "Value", "Text");
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult AddBusStation(FormCollection collection)
+        {
+            AddBusStationViewModel model = new AddBusStationViewModel();
+            if (TryUpdateModel<AddBusStationViewModel>(model))
+            {
+                BusStation busStation = new BusStation()
+                {
+                    ID = Guid.NewGuid(),
+                    RoadSessionID = model.SelectedRoadSessionID,
+                    StationName = model.StationName,
+                    Position_X = model.Position_X,
+                    Position_Y = model.Position_Y
+                };
+                busService.InsertBusStation(busStation);
+                return RedirectToAction("BusStationList");
+            }
+            else
+            {
+                ViewBag.Roads = new SelectList(RoadSelectList(), "Value", "Text");
+                return View(model);
+            }
+        }
+        private IList<SelectListItem> RoadSelectList()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            IList<Road> roadList = busService.GetAllRoads();
+            foreach (var stt in roadList.OrderBy(x => x.RoadName))
+            {
+                items.Add(new SelectListItem
+                {
+                    Text = stt.RoadName,
+                    Value = stt.RoadID.ToString()
+                });
+            }
+            return items;
+        }
+        public ActionResult DeleteBusStation(Guid ID)
+        {
+            DeleteBusStationViewModel model = new DeleteBusStationViewModel()
+            {
+                BusStationID = ID
+            };
 
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult DeleteBusStation(FormCollection collection)
+        {
+            DeleteBusStationViewModel model = new DeleteBusStationViewModel();
+            if (TryUpdateModel<DeleteBusStationViewModel>(model))
+            {
+                busService.DeleteBusStation(model.BusStationID);
+                return RedirectToAction("BusStationList");
+            }
+
+            return View(model);
+        }
+        #endregion
         public ActionResult DeleteBusRoute(Guid ID)
         {
             DeleteBusRouteViewModel model = new DeleteBusRouteViewModel() { RouteID = ID };
@@ -412,6 +589,23 @@ namespace ITS.Admin.Controllers
                 return RedirectToAction("BusRouteList");
             }
             return View(model);
+        }
+
+        public JsonResult GetRoadSessionSelectList(Guid ID)
+        {
+            // get the products from the repository 
+
+            var status = new List<SelectListItem>();
+            IList<RoadSession> list = busService.GetAllRoadSessionOfARoad(ID);
+            foreach (var stt in list)
+            {
+                status.Add(new SelectListItem
+                {
+                    Text = stt.Description,
+                    Value = stt.ID.ToString()
+                });
+            }
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
     }
 }

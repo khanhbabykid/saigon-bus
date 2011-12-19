@@ -1,4 +1,12 @@
-﻿.table_detail table tr.title
+﻿/*Validation*/
+.input-validation-error { border: 1px solid #f00}
+.input-validation-valid  { /* Optional: you can set whatever style you want */ }
+.field-validation-error { color: #f00 }
+.field-validation-valid { display: none }
+.validation-summary-errors { font-weight: bold; color: #f00;margin-left:50px}
+.validation-summary-valid { display: none }
+/*End - Validation*/
+.table_detail table tr.title
 {
     background: #EEECE1;
 }
@@ -28,5 +36,10 @@
 .PointTextBox
 {
     width:60px;
+    text-align:center;
+}
+.StationName
+{
+    width:350px;
     text-align:center;
 }

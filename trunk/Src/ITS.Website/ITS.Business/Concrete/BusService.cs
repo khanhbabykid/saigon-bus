@@ -45,6 +45,7 @@ namespace ITS.Business.Concrete
             return busRepository.GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(RouteID, Direction);
         }
 
+        #region Intermediate Point
         public IList<Point> GetIntermediatePoints(Guid MovementID)
         {
             return busRepository.GetIntermediatePoints(MovementID);
@@ -53,18 +54,23 @@ namespace ITS.Business.Concrete
         {
             return busRepository.GetIntermediatePoints_2(MovementID);
         }
+        public IntermediatePoint IntermediatePoint(Guid pointID)
+        {
+            return busRepository.IntermediatePoint(pointID);
+        }
         public void InsertIntermediatePoint(Guid MovementID, double lat, double lng, int order)
         {
             busRepository.InsertIntermediatePoint(MovementID, lat, lng, order);
         }
-
-
         public void SaveIntermediatePoint(IntermediatePoint p)
         {
             busRepository.SaveIntermediatePoint(p);
         }
-
-
+        public void DeleteIntermediatePoint(Guid pointID)
+        {
+            busRepository.DeleteIntermediatePoint(pointID);
+        }
+        #endregion
         public void SaveRoadSession(RoadSession r)
         {
             busRepository.SaveRoadSession(r);
@@ -82,12 +88,16 @@ namespace ITS.Business.Concrete
             return busRepository.GetBusStation(StationID);
         }
 
-
+        #region Route
         public BusRoute GetBusRoute(Guid RouteID)
         {
             return busRepository.GetBusRoute(RouteID);
         }
-
+        public IList<BusRoute> BusRoutesThroughAStation(Guid stationID)
+        {
+            return busRepository.BusRoutesThroughAStation(stationID);
+        }
+        #endregion
 
         public void SaveBusMovement(BusMovement movement)
         {
@@ -157,10 +167,35 @@ namespace ITS.Business.Concrete
             busRepository.DeleteRoad(roadID);
         }
 
-
+        #region Road Session
         public IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID)
         {
             return busRepository.GetAllRoadSessionOfARoad(roadID);
         }
+
+        public void InsertRoadSession(RoadSession roadSession)
+        {
+            busRepository.InsertRoadSession(roadSession);
+        }
+
+        public void DeleteRoadSession(Guid roadSessionID)
+        {
+            busRepository.DeleteRoadSession(roadSessionID);
+        }
+        #endregion
+        #region Bus Station
+        public void InsertBusStation(BusStation busStation)
+        {
+            busRepository.InsertBusStation(busStation);
+        }
+        public void SaveBusStation(BusStation busStation)
+        {
+            busRepository.SaveBusStation(busStation);
+        }
+        public void DeleteBusStation(Guid stationID)
+        {
+            busRepository.DeleteBusStation(stationID);
+        }
+        #endregion
     }
 }

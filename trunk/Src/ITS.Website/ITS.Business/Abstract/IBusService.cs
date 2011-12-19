@@ -19,15 +19,19 @@ namespace ITS.Business.Abstract
         IList<Point> GetAllStationPositionsOfARouteInOrderWithIntermediatePoints(Guid RouteID, Boolean Direction);
         string GetRoadNameFromBusStationID(Guid BusStationID);
 
+        #region Intermediate Point
         IList<Point> GetIntermediatePoints(Guid MovementID);
         IList<IntermediatePoint> GetIntermediatePoints_2(Guid MovementID);
+        IntermediatePoint IntermediatePoint(Guid pointID);
         void InsertIntermediatePoint(Guid MovementID, double lat, double lng, int order);
-
         void SaveIntermediatePoint(IntermediatePoint p);
+        void DeleteIntermediatePoint(Guid pointID);
+        #endregion
         void SaveRoadSession(RoadSession r);
 
         #region Bus Station
         IList<BusStation> GetAllBusStation();
+        void SaveBusStation(BusStation busStation);
         #endregion
 
         #region Bus Movements
@@ -38,15 +42,26 @@ namespace ITS.Business.Abstract
         void DeleteBusMovement(Guid MovementId);
         #endregion
 
+        #region Route
+        IList<BusRoute> BusRoutesThroughAStation(Guid stationID);
         void SaveBusRoute(BusRoute busRoute);
         void InsertBusRoute(BusRoute busRoute);
         void DeleteBusRoute(Guid routeID);
-
+        #endregion
         IList<Road> GetAllRoads();
         void SaveRoad(Road road);
         void InsertRoad(Road road);
         void DeleteRoad(Guid roadID);
 
+        #region Road Session
         IList<RoadSession> GetAllRoadSessionOfARoad(Guid roadID);
+        void InsertRoadSession(RoadSession roadSession);
+        void DeleteRoadSession(Guid roadSessionID);
+        #endregion
+
+        #region Bus Station
+        void InsertBusStation(BusStation busStation);
+        void DeleteBusStation(Guid stationID);
+        #endregion
     }
 }

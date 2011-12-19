@@ -1,0 +1,19 @@
+﻿@model ITS.Domain.Models.Bus.Admin.DeleteRoadSessionViewModel
+
+@{
+    ViewBag.Title = "DeleteRoadSession";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeleteRoadSession</h2>
+<h3>
+    Bạn có chắc chắn muốn xóa?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(m => m.RoadSessionID)
+        @Html.HiddenFor(m=>m.RoadID)
+        <input type="submit" value="Xóa" />
+        @Html.ActionLink("Quay lại", "RoadSessionList", new { ID = Model.RoadID })
+    </p>
+}

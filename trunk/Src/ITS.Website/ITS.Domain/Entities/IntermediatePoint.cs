@@ -17,9 +17,8 @@ namespace ITS.Domain.Entities
 {
     public class IntermediatePoint
     {
-        /// <summary></summary>
         public Guid ID { get; set; }
-        /// <summary></summary>
+        public Guid BusMovementID { get; set; }
         public float lat { get; set; }
         public float lng { get; set; }
         public int OrderNumber { get; set; }

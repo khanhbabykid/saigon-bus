@@ -13,7 +13,12 @@ namespace ITS.Domain.Models.Bus.Admin
 
     public class BusStationModel
     {
-        public BusStation BusStation { get; set; }
+        public Guid ID;
+        public Guid RoadSessionID;
+        public String StationName;
+        public float Position_X;
+        public float Position_Y;
+
         public string StreetName { get; set; }
     }
 }
