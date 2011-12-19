@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using ITS.Business.Abstract;
 using ITS.Domain.Entities;
 using ITS.Domain.Models.Bus;
+using ITS.Domain.Models.Bus.Admin;
+using ITS.Domain.Models.Bus.Website;
 
 namespace ITS.Website.Controllers
 {
@@ -23,6 +25,7 @@ namespace ITS.Website.Controllers
             return View();
         }
 
+        #region Route Info
         public ActionResult RouteInfo()
         {
             BusRouteInfoViewModel model = new BusRouteInfoViewModel();
@@ -73,5 +76,54 @@ namespace ITS.Website.Controllers
 
             return items;
         }
+        #endregion
+
+        #region Bus Station
+        public ActionResult BusStationList()
+        {
+            BusStationListViewModel model = new BusStationListViewModel()
+            {
+                StationList = BuildStationModel(busService.GetAllBusStation())
+            };
+            return View(model);
+        }
+        private IList<BusStationModel> BuildStationModel(IList<BusStation> stations)
+        {
+            IList<BusStationModel> list = new List<BusStationModel>();
+            foreach (BusStation s in stations)
+            {
+                list.Add(new BusStationModel()
+                {
+                    ID = s.ID,
+                    StationName = s.StationName,
+                    Position_X = s.Position_X,
+                    Position_Y = s.Position_Y,
+                    RoadSessionID = s.RoadSessionID,
+                    StreetName = busService.GetRoadNameFromBusStationID(s.ID)
+                });
+            }
+            return list.OrderBy(x => x.StreetName).ToList();
+        }
+
+        public ActionResult BusStationDetail(Guid ID)
+        {
+            BusStationDetailViewModel model = new BusStationDetailViewModel()
+            {
+                BusStation = busService.GetBusStation(ID),
+                RoadName = busService.GetRoadNameFromBusStationID(ID),
+                BusRoutes = busService.BusRoutesThroughAStation(ID)
+            };
+            return View(model);
+        }
+        #endregion
+
+        #region Find Bus
+        public ActionResult FindBusRoute()
+        {
+            FindBusRouteViewModel model = new FindBusRouteViewModel();
+
+            return View(model);
+        }
+        #endregion
     }
 }

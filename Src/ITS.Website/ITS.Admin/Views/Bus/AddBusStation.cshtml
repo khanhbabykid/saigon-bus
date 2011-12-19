@@ -1,0 +1,79 @@
+﻿@model ITS.Domain.Models.Bus.Admin.AddBusStationViewModel
+@{
+    ViewBag.Title = "AddBusStation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false)
+    <div class="gadget" style="opacity: 1; z-index: 0;">
+        <div class="titlebar vertsortable_head">
+            <a href="#" class="hidegadget" rel="hide_block" style="background-image: url(/images/button_dropup_bl.gif);">
+                <img src="/images/spacer.gif" alt="picture" width="19" height="33" /></a>
+            <h3>
+                Trạm xe</h3>
+        </div>
+        <div class="gadgetblock" style="display: block;">
+            <table class="gwlines full">
+                <tbody>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Đường:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SelectedRoadID, ViewBag.Roads as SelectList, "-- chọn đường --")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Đoạn đường:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => m.SelectedRoadSessionID, new List<SelectListItem>(), "chọn đoạn đường")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tên trạm:
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.StationName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Vị trí (long,lat):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Position_X)@Html.TextBoxFor(m => m.Position_Y)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Save" />
+        </div>
+    </div>
+}
+<script type="text/javascript" src="../../Themes/webappskins-blueadmin/js/jquery-1.4.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#SelectedRoadID").change(function () {
+            $.getJSON("/Bus/GetRoadSessionSelectList/" + $(this).val(), null,
+                    function (data) {
+                        var ddlSelectedStatus = $("#SelectedRoadSessionID");
+                        // clear all previous options
+                        $("#SelectedRoadSessionID > option").remove();
+                        // populate the statuses
+                        $.each(data, function (index, optionData) {
+                            ddlSelectedStatus.append($("<option />").val(optionData.Value).text(optionData.Text))
+                        });
+                    });
+        });
+    });
+</script>

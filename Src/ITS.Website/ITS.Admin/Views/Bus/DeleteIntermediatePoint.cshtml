@@ -1,0 +1,19 @@
+﻿@model ITS.Domain.Models.Bus.Admin.DeleteIntermediatePointViewModel
+
+@{
+    ViewBag.Title = "DeleteIntermediatePoint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeleteIntermediatePoint</h2>
+<h3>
+    Bạn có chắc chắn muốn xóa?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(m => m.IntermediatePointID)
+        @Html.HiddenFor(m=>m.MovementID)
+        <input type="submit" value="Xóa" />
+        @Html.ActionLink("Quay lại", "IntermediatePoints", new { ID = Model.MovementID })
+    </p>
+}

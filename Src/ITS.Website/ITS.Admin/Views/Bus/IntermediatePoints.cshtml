@@ -3,57 +3,78 @@
     ViewBag.Title = "IntermediatePoints";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    IntermediatePoints</h2>
-<p>
-</p>
+
 @using (@Html.BeginForm())
 {
     @Html.HiddenFor(m => m.MovementID)
-    <div class="table_detail">
-        <table border="0" cellspacing="0" width="100%">
-            <tbody>
-                <tr class="title">
-                    <td class="user_name">
-                        Thứ tự
-                    </td>
-                    <td class="date_time">
-                        Latitude
-                    </td>
-                    <td class="aprroval">
-                        Longitude
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                @for (int i = 0; i < Model.PointList.Count; i++)
-                {
-                    <tr class="@(i % 2 == 0 ? "content" : "content bg_colum")">
-                        <td class="user_name left">
-                            @Html.HiddenFor(m => m.PointList[i].ID)
-                            @Html.TextBoxFor(m => m.PointList[i].OrderNumber)
-                        </td>
-                        <td class="date_time">
-                            @Html.TextBoxFor(m => m.PointList[i].lng)
-                        </td>
-                        <td class="aprroval">
-                            @Html.TextBoxFor(m => m.PointList[i].lat)
-                        </td>
+    <div class="gadget" style="opacity: 1; z-index: 0;">
+        <div class="titlebar vertsortable_head">
+            <a href="#" class="hidegadget" rel="hide_block" style="background-image: url(/images/button_dropup_bl.gif);">
+                <img src="/images/spacer.gif" alt="picture" width="19" height="33" /></a>
+            <h3>
+                Danh sách điểm trung gian</h3>
+        </div>
+        <div class="gadgetblock" style="display: block;">
+            <table class="gwlines full">
+                <tbody>
+                    <tr>
+                        <th style="text-align: center">
+                            Thứ tự
+                        </th>
+                        <th style="text-align: center">
+                            Position (long,lat)
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    @for (int i = 0; i < Model.PointList.Count; i++)
+                    {
+                        <tr>
+                            <td style="text-align: center">
+                                @Html.HiddenFor(m => m.PointList[i].ID)
+                                @Html.TextBoxFor(m => m.PointList[i].OrderNumber, new { @class = "OrderNoTextBox" })
+                            </td>
+                            <td style="text-align: center">
+                                @Html.TextBoxFor(m => m.PointList[i].lng, new { @class = "PointTextBox" })
+                                @Html.TextBoxFor(m => m.PointList[i].lat, new { @class = "PointTextBox" })
+                            </td>
+                            <td  style="text-align: center">
+                                <a href="@Url.Action("DeleteIntermediatePoint", new { ID = Model.PointList[i].ID })">
+                                    Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            Thêm điểm:
+            <table class="gwlines full">
+                <tbody>
+                    <tr>
                         <td>
-                            <a href="@Url.Action("DeleteIntermediatePoint", new { ID = Model.PointList[i].ID })">
-                                Delete</a>
+                            Longitude:
+                        </td>
+                        <td>@Html.TextBoxFor(m => m.NewPointLng)
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                    <tr>
+                        <td>
+                            Latitude:
+                        </td>
+                        <td>@Html.TextBoxFor(m => m.NewPointLat)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Số thứ tự:
+                        </td>
+                        <td>@Html.TextBoxFor(m => m.NewPointOrder)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                <input type="submit" value="Save" /></p>
+        </div>
     </div>
-    <p>
-        New Point:<br />
-        <span>Lat: </span>@Html.TextBoxFor(m => m.NewPointLat)<br />
-        <span>Lng: </span>@Html.TextBoxFor(m => m.NewPointLng)<br />
-        <span>Order: </span>@Html.TextBoxFor(m => m.NewPointOrder)
-    </p>
-    <p>
-        <input type="submit" value="Save" /></p>
 }

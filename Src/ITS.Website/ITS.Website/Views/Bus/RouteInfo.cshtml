@@ -35,19 +35,15 @@
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<h2>
-    Lộ trình xe bus</h2>
 @using (Html.BeginForm())
 {
-    @Html.DropDownListFor(model => Model.SelectedRoute, Model.RouteSelectList)
+    <span>Xem lộ trình tuyến xe: </span>@Html.DropDownListFor(model => Model.SelectedRoute, Model.RouteSelectList)
 
     <input id="btnSubmit" value="Xem" type="submit" />
 }
-@Html.Raw(Model.Movements1)
-<br />
-@Html.Raw(Model.Movements2)
-<h3>
-    Bản đồ</h3>
+<p>
+    @Html.Raw(Model.Movements1)
+    @Html.Raw(Model.Movements2)</p>
 <center>
     <div id="map-canvas" style="width: 800px; height: 500px">
     </div>

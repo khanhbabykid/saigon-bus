@@ -1,0 +1,56 @@
+﻿@model ITS.Domain.Models.Bus.RoadSessionViewModel
+@{
+    ViewBag.Title = "AddRoadSession";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false)
+    @Html.HiddenFor(m => m.RoadID)
+    <div class="gadget" style="opacity: 1; z-index: 0;">
+        <div class="titlebar vertsortable_head">
+            <a href="#" class="hidegadget" rel="hide_block" style="background-image: url(/images/button_dropup_bl.gif);">
+                <img src="/images/spacer.gif" alt="picture" width="19" height="33" /></a>
+            <h3>
+                Thêm đoạn đường</h3>
+        </div>
+        <div class="gadgetblock" style="display: block;">
+            <table class="gwlines full">
+                <tbody>
+                    <tr>
+                        <th style="text-align: center">
+                            Range địa chỉ
+                        </th>
+                        <th style="text-align: center">
+                            Mô tả
+                        </th>
+                        <th style="text-align: center">
+                            Point_L (long, lat)
+                        </th>
+                        <th style="text-align: center">
+                            Point_H (long, lat)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">
+                            @Html.TextBoxFor(m => m.AddressLower, new { @class = "AddressNoTextBox" })
+                            @Html.TextBoxFor(m => m.AddressUpper, new { @class = "AddressNoTextBox" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Description)
+                        </td>
+                        <td style="text-align: center">
+                            @Html.TextBoxFor(m => m.PositionLower_X, new { @class = "PointTextBox" })
+                            @Html.TextBoxFor(m => m.PositionLower_Y, new { @class = "PointTextBox" })
+                        </td>
+                        <td style="text-align: center">
+                            @Html.TextBoxFor(m => m.PositionUpper_X, new { @class = "PointTextBox" })
+                            @Html.TextBoxFor(m => m.PositionUpper_Y, new { @class = "PointTextBox" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Save" /><a href="@Url.Action("RoadSessionList", new { ID = Model.RoadID })">Cancel</a>
+        </div>
+    </div>
+}

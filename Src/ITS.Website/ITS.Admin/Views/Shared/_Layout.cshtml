@@ -58,7 +58,9 @@
                 </div>
                 <ul>
                     <li class="first"><a href="/" class="active"><span><span><span>Trang chủ</span></span></span></a></li>
-                    <li><a href="/News/NewsList.aspx"><span><span><span>Trạm xe
+                    <li class="first"><a href="@Url.Action("BusRouteList", "Bus")" class="active"><span><span><span>Tuyến xe</span></span></span></a></li>
+                    <li class="first"><a href="@Url.Action("RoadList", "Bus")" class="active"><span><span><span>Đường</span></span></span></a></li>
+                    <li><a href="@Url.Action("BusStationList", "Bus")"><span><span><span>Trạm xe
                         <img src="/images/dropdown_arrow.gif" alt="picture" width="8" height="7" /></span></span></span></a>
                         <ul>
                             <li><a href="@Url.Action("BusStationList", "Bus")">Danh sách trạm xe</a></li>

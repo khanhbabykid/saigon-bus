@@ -17,18 +17,10 @@ namespace ITS.Domain.Entities
 {
     public class BusStation
     {
-        /// <summary></summary>
         public Guid ID;
         public Guid RoadSessionID;
-        /// <summary></summary>
         public String StationName;
-        /// <summary></summary>
         public float Position_X;
         public float Position_Y;
-        /// <summary></summary>
-        public string GetRoadName()
-        {
-            return string.Empty;
-        }
     }
 }

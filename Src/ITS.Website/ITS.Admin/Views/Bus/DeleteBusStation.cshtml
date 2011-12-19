@@ -1,0 +1,18 @@
+﻿@model ITS.Domain.Models.Bus.Admin.DeleteBusStationViewModel
+
+@{
+    ViewBag.Title = "DeleteBusStation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DeleteBusStation</h2>
+<h3>
+    Bạn có chắc chắn muốn xóa?</h3>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.HiddenFor(m => m.BusStationID)
+        <input type="submit" value="Xóa" />
+        @Html.ActionLink("Quay lại", "BusStationList")
+    </p>
+}

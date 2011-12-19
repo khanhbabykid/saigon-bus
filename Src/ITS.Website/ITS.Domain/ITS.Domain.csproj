@@ -50,11 +50,15 @@
     <Compile Include="Entities\Route.cs" />
     <Compile Include="Entities\BusStation.cs" />
     <Compile Include="Helpers\GeometryHelper.cs" />
+    <Compile Include="Models\Bus\Admin\AddBusStationViewModel.cs" />
     <Compile Include="Models\Bus\Admin\AddIntermediatePointViewModel.cs" />
     <Compile Include="Models\Bus\Admin\AddBusMovementViewModel.cs" />
     <Compile Include="Models\Bus\Admin\BusMovementsViewModel.cs" />
     <Compile Include="Models\Bus\Admin\BusRouteListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\BusStationListViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteBusStationViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteIntermediatePointViewModel.cs" />
+    <Compile Include="Models\Bus\Admin\DeleteRoadSessionViewModel.cs" />
     <Compile Include="Models\Bus\Admin\RoadSessionListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteRoadViewModel.cs" />
     <Compile Include="Models\Bus\Admin\RoadListViewModel.cs" />
@@ -63,6 +67,8 @@
     <Compile Include="Models\Bus\Website\BusRouteInfoViewModel.cs" />
     <Compile Include="Models\Bus\Admin\EditBusViewModel.cs" />
     <Compile Include="Models\Bus\Admin\RoadSessionViewModel.cs" />
+    <Compile Include="Models\Bus\Website\BusStationDetailViewModel.cs" />
+    <Compile Include="Models\Bus\Website\FindBusRouteViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

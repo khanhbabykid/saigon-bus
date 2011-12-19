@@ -3,14 +3,19 @@
     ViewBag.Title = "BusRouteList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Đoạn đường</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(false)
+    @Html.HiddenFor(m => m.RoadID)
     <div class="gadget" style="opacity: 1; z-index: 0;">
+        <div class="titlebar vertsortable_head">
+            <a href="#" class="hidegadget" rel="hide_block" style="background-image: url(/images/button_dropup_bl.gif);">
+                <img src="/images/spacer.gif" alt="picture" width="19" height="33" /></a>
+            <h3>
+                Đoạn đường</h3>
+        </div>
         <div class="gadgetblock" style="display: block;">
             <table class="gwlines full">
                 <tbody>
@@ -51,13 +56,14 @@
                                 @Html.TextBoxFor(m => m.RoadSessionList[i].PositionUpper_Y, new { @class = "PointTextBox" })
                             </td>
                             <td style="text-align: center">
-                                <a href="@Url.Action("DeleteSession", new { ID = Model.RoadSessionList[i].ID })">Delete</a>
+                                <a href="@Url.Action("DeleteRoadSession", new { ID = Model.RoadSessionList[i].ID })">
+                                    Delete</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Save" />@Html.ActionLink("Thêm đoạn đường", "AddRoadSession", new { ID = Model.RoadID })
         </div>
     </div>
     
