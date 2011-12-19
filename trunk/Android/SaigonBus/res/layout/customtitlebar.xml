@@ -8,6 +8,7 @@
         android:padding = "5dip" 
         android:textStyle = "bold"
         android:text = "Saigon Bus" />   
+       
         <TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/titleTvRight"		
 			android:layout_centerVertical = "true"			

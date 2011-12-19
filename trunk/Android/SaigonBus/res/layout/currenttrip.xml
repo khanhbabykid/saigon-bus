@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:paddingBottom = "10dip"
+ >  
+  <LinearLayout
+  	android:layout_width = "298dip"
+  	android:layout_height = "wrap_content"
+  	android:background = "@drawable/bluebotransparency"
+  	android:layout_marginTop = "15dip"
+  	android:orientation = "vertical"  	
+  	android:layout_marginLeft = "10dip"
+  >	
+  <TextView
+		android:layout_width = "wrap_content"
+	  	android:layout_height = "wrap_content"
+	  	android:text = "Điểm Dừng"	
+	  	android:textColor = "#05a1d8"
+	  	android:textSize = "20sp"	  	
+	  	android:textStyle = "bold"
+	  	android:layout_marginTop = "-5dip"	  	   
+	></TextView>	
+	<ListView android:layout_width="270dip"
+		android:background = "@drawable/box_trip"
+		android:padding = "2dip"
+		android:layout_marginTop = "5dip"
+		android:layout_gravity = "center_horizontal"		
+		android:layout_height="wrap_content" android:id="@id/android:list"					
+		android:drawSelectorOnTop="false"
+        android:cacheColorHint="#00000000"       
+        android:listSelector="@android:color/transparent"   
+        android:divider = "@color/color_list"	
+        android:dividerHeight="1px"   
+		></ListView>
+		<TextView android:id="@id/android:empty" android:layout_width="270dip"
+			android:background = "@drawable/box_trip"
+			android:layout_below="@+id/layoutBackgroundProfile"
+			android:textStyle = "bold"
+			android:textColor = "#ff6000"	
+			android:textSize = "20sp"	
+			android:layout_marginTop = "8dip"
+			android:layout_gravity = "center"
+			android:gravity = "center_horizontal"
+            android:layout_height="wrap_content"  android:autoLink="email" android:text="Không có trạm"/>
+	</LinearLayout>	
+</LinearLayout>
