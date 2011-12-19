@@ -2,4 +2,9 @@
 <resources>
     <string name="hello">Hello World, SaigonBus!</string>
     <string name="app_name">SaigonBus</string>
+    
+    <string name="home">Lộ Trình</string>
+	<string name="trips">Tuyến Xe</string>
+	<string name="tools">Tìm Tuyến</string>
+	<string name="profile">Trợ Giúp</string>
 </resources>
