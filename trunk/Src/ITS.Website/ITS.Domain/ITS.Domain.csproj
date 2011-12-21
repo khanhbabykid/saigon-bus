@@ -64,6 +64,8 @@
     <Compile Include="Models\Bus\Admin\RoadListViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteBusMovementViewModel.cs" />
     <Compile Include="Models\Bus\Admin\DeleteBusRouteViewModel.cs" />
+    <Compile Include="Models\Bus\Mobile\MobileBusStationModel.cs" />
+    <Compile Include="Models\Bus\Mobile\MobileFindBusRouteModel.cs" />
     <Compile Include="Models\Bus\Mobile\RouteInfoModel.cs" />
     <Compile Include="Models\Bus\Website\BusRouteInfoViewModel.cs" />
     <Compile Include="Models\Bus\Admin\EditBusViewModel.cs" />
