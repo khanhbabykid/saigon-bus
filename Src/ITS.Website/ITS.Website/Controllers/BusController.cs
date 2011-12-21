@@ -170,8 +170,8 @@ namespace ITS.Website.Controllers
                 Point Position_Dst = busService.GetPositionFromAddress(model.AddressNo_Dst, model.StreetName_Dst);
                 if (Position_Src != null && Position_Dst != null)
                 {
-                    IList<BusStation> nearestStations_Src = busService.GetNearestStations(Position_Src, 1);
-                    IList<BusStation> nearestStations_Dst = busService.GetNearestStations(Position_Dst, 1);
+                    IList<BusStation> nearestStations_Src = busService.GetNearestStations(Position_Src, 2);
+                    IList<BusStation> nearestStations_Dst = busService.GetNearestStations(Position_Dst, 2);
                     IList<BusRoute> tempRouteList;
                     IList<Path2RoutesModel> tempRouteList2;
                     Path1RoutesModel tempPath1;
