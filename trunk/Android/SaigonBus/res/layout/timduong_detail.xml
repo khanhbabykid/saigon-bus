@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:paddingBottom = "10dip"
+	android:background = "@drawable/background">
+	<include layout="@layout/customtitlebar"/>
+	<RelativeLayout
+		android:layout_below = "@+id/layoutTitle"		
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:background = "@drawable/header_wipolo"
+		android:id = "@+id/layoutTitleTrip"
+		android:padding = "5dip"	
+	>
+		<ImageView
+			android:id = "@+id/imageHeader"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:background = "@drawable/iconflighttrain"
+		></ImageView>
+		<TextView		
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"		
+			android:text = "Tìm Đường"
+			android:textColor = "#FFFFFF"
+			android:textSize = "18sp"
+			android:textStyle = "bold"
+			android:paddingLeft = "5dip"
+			android:layout_toRightOf = "@+id/imageHeader"		
+		>		
+		</TextView>
+	</RelativeLayout>
+	
+
+	<RelativeLayout
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"		
+		android:layout_below = 	"@+id/layoutTitleTrip"
+		android:background = "@drawable/boxtop_trip"		
+		android:id = "@+id/layoutBackgroundProfile"
+		android:layout_marginTop = "-7dip" 
+		android:padding = "5dip"
+		>
+		<RelativeLayout
+			android:layout_width = "298dip"
+			android:layout_height = "wrap_content"
+			android:background = "@drawable/box_trip"			
+			android:id = "@+id/layoutNameTrip"		
+			android:padding = "5dip"
+			android:layout_marginTop = "5dip"				
+			android:layout_marginLeft = "5dip">
+				<ImageView android:id="@+id/ImageView01"
+					android:layout_width="wrap_content"
+						android:layout_alignParentLeft="true" android:layout_height="wrap_content"
+						></ImageView>
+				<TextView android:id="@+id/TextView01" 
+						android:layout_width="wrap_content" 
+						android:text="@+id/TextView01"
+						android:textColor = "#ff6000"	
+						android:textSize = "16sp"
+						android:textStyle = "bold" 
+					    android:layout_centerHorizontal = "true"
+					    android:layout_centerVertical ="true"
+						android:paddingLeft = "5dip"								
+						android:layout_toRightOf="@+id/ImageView01"  
+						android:layout_height="wrap_content"					
+					></TextView>
+						
+		</RelativeLayout>
+	</RelativeLayout>
+	
+	<ListView 
+			android:layout_width="298dip"	
+			android:layout_marginLeft = "10dip"				
+			android:background = "@drawable/box_trip"
+			android:layout_height="wrap_content" android:id="@id/android:list"			
+			android:layout_below="@+id/layoutBackgroundProfile" android:layout_marginTop="10dip"
+			android:layout_marginBottom = "10dip"
+			android:padding = "2dip"
+			android:drawSelectorOnTop="false"
+	        android:cacheColorHint="#00000000"
+	       	android:divider = "@color/color_list"	
+        	android:dividerHeight="1px"          
+	        android:listSelector="@android:color/transparent"				
+			></ListView>
+	<TextView android:id="@id/android:empty" android:layout_width="298dip"
+			android:background = "@drawable/box_trip"
+			android:layout_below="@+id/layoutBackgroundProfile"
+			android:textSize = "20sp"
+			android:textColor = "#ff6000"
+			android:textStyle = "bold"		
+			android:paddingLeft = "35dip"	
+			android:layout_centerHorizontal = "true"
+            android:layout_height="wrap_content" android:text="Không có dử liệu" />		
+</RelativeLayout>

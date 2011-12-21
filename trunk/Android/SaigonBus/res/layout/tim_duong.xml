@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:paddingBottom = "10dip"
+ >  
+  <LinearLayout
+  	android:layout_width = "298dip"
+  	android:layout_height = "wrap_content"
+  	android:background = "@drawable/bluebotransparency"
+  	android:layout_marginTop = "15dip"
+  	android:orientation = "vertical"  	
+  	android:layout_marginLeft = "10dip"
+  >	
+  <TextView
+		android:layout_width = "wrap_content"
+	  	android:layout_height = "wrap_content"
+	  	android:text = "Bạn đang ở đâu? Bạn muốn đi đâu?"	
+	  	android:textColor = "#05a1d8"
+	  	android:textSize = "16sp"	  
+	  	android:gravity = "center_horizontal"	
+	  	android:textStyle = "bold"
+	  	android:layout_marginTop = "-5dip"	  	   
+	></TextView>	
+	<TextView
+		android:layout_width = "wrap_content"
+	  	android:layout_height = "wrap_content"
+	  	android:text = "Từ"	
+	  	android:textColor = "#05a1d8"
+	  	android:textSize = "20sp"	  
+	  	android:textStyle = "bold"
+	  	android:layout_marginTop = "-5dip"	  	   
+	></TextView>	
+	<LinearLayout
+		android:layout_width = "wrap_content"
+  		android:layout_height = "wrap_content"
+		android:orientation = "horizontal"
+	>
+	<EditText
+		android:layout_width = "120dp"
+	  	android:layout_height = "wrap_content"
+	  	android:id = "@+id/edit_tu_add"
+	></EditText>
+	<EditText
+		android:layout_width = "120dp"
+		android:layout_marginLeft = "10dp"
+	  	android:layout_height = "wrap_content"
+	  	android:id = "@+id/edit_tu_street"
+	></EditText>
+	</LinearLayout>
+	
+	<TextView
+		android:layout_width = "wrap_content"
+	  	android:layout_height = "wrap_content"
+	  	android:text = "Đến"	
+	  	android:textColor = "#05a1d8"
+	  	android:textSize = "20sp"	  
+	  	android:textStyle = "bold"
+	  	android:layout_marginTop = "10dip"	  	   
+	></TextView>	
+	<LinearLayout
+		android:layout_width = "wrap_content"
+  		android:layout_height = "wrap_content"
+		android:orientation = "horizontal"
+	>
+	<EditText
+		android:layout_width = "120dp"
+	  	android:layout_height = "wrap_content"
+	  	android:id = "@+id/edit_de_add"
+	></EditText>
+	<EditText
+		android:layout_width = "120dp"
+		android:layout_marginLeft = "10dp"
+	  	android:layout_height = "wrap_content"
+	  	android:id = "@+id/edit_de_street"
+	></EditText>
+	</LinearLayout>
+	
+	<Button
+		android:layout_width = "wrap_content"
+	  	android:layout_height = "wrap_content"
+	  	android:text = "Tìm Xe"
+		android:id = "@+id/idButtonTim"
+		android:layout_gravity = "center_horizontal"
+	></Button>
+	</LinearLayout>	
+</LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation = "vertical"
+  android:paddingBottom = "10dip"
+ >  
+  <LinearLayout
+  	android:layout_width = "298dip"
+  	android:layout_height = "wrap_content"
+  	android:background = "@drawable/bluebotransparency"
+  	android:layout_marginTop = "15dip"
+  	android:orientation = "vertical"  	
+  	android:layout_marginLeft = "10dip"
+  > 
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:padding = "5dip"	
+	android:background = "@drawable/box_trip"
+	>
+	
+	<ImageView android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft = "5dip"
+		android:layout_centerVertical = "true" 
+		android:id="@+id/IconList"></ImageView>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="@+id/TextViewTEST"
+		android:textColor = "#ff6000"	
+		android:textSize = "16sp"
+		android:textStyle = "bold"	
+		android:layout_marginTop = "-3dp"
+		android:paddingLeft = "5dip"
+		android:layout_marginLeft = "10dp"
+		android:layout_toRightOf="@+id/IconList" android:layout_alignTop="@+id/IconList"
+		android:id="@+id/TextList2"></TextView>
+	<TextView android:text="@+id/TextView02" android:layout_width="wrap_content"
+		android:layout_below="@+id/TextList2"
+		android:paddingLeft = "5dip"
+		android:textColor = "#000000"
+		android:singleLine = "true"
+		android:layout_alignLeft="@+id/TextList2"
+		android:layout_height="wrap_content" android:id="@+id/Textlist3"></TextView>
+		<TextView android:text="@+id/TextView03" android:layout_width="wrap_content"
+			android:layout_below="@+id/Textlist3"
+			android:paddingLeft = "5dip"
+			android:textColor = "#000000"
+			android:singleLine = "true"
+			android:layout_marginLeft = "5dp"
+			android:layout_toRightOf="@+id/IconList"
+			android:layout_height="wrap_content" android:id="@+id/Textlist4"></TextView>
+	</RelativeLayout>
+	</LinearLayout>	
+	<RelativeLayout android:id="@+id/relativeLayout2"
+		android:layout_height="wrap_content" android:layout_width="298dp"
+		android:layout_marginTop="10dip"
+		android:layout_marginLeft = "10dp"
+		android:background = "@drawable/box_trip"
+		android:padding = "4dp"
+		>
+		<com.google.android.maps.MapView
+			android:id="@+id/mapview" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:clickable="true"
+			android:apiKey="0AfoVDFHJpxbuYvo_A-URndZtSQprCYAGFdnJ3w" />
+	</RelativeLayout>
+</LinearLayout>
