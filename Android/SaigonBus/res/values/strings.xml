@@ -4,7 +4,21 @@
     <string name="app_name">SaigonBus</string>
     
     <string name="home">Lộ Trình</string>
-	<string name="trips">Tuyến Xe</string>
-	<string name="tools">Tìm Tuyến</string>
+	<string name="trips">Trạm xe</string>
+	<string name="tools">Vị Trí</string>
 	<string name="profile">Trợ Giúp</string>
+	
+	<string name="so38">số 38</string>
+	<string name="dibo">Đi bộ đến trạm</string>
+	<string name="bat_xe">Bắt xe</string>
+	<string name="dung_tram">Dừng ở trạm</string>
+	<string name="conlai">Đi bộ đoạn còn lại</string>
+	
+	<string name="street">Đường </string>
+	<string name="station">Trạm </string>
+	
+	<string name="ten_tram">Tên trạm </string>
+	<string name="nam_tren_duong">Nằm trên đường</string>
+	<string name="tuyen_qua">Tuyến đi qua </string>
+	<string name="vitri_temp">72 Trương Quốc Dung </string>
 </resources>

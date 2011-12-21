@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 import cse.it.data.BusStation;
+import cse.it.parse.Downloader;
+import cse.it.parse.ParsedData;
 
 public class SplashActivity extends Activity{
 
 	private String TAG = "SplashActivity";
-	private final int SPLASH_DISPLAY_LENGHT = 1000;
+	private final int SPLASH_DISPLAY_LENGHT = 2000;
 	private Context mContext;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +24,16 @@ public class SplashActivity extends Activity{
 		this.setContentView(R.layout.splash);
 		
 		
-			new Handler().postDelayed(new Runnable() {
-	
-				public void run() {
-					Intent intent = new Intent(SplashActivity.this, SaigonBus.class);
-					startActivity(intent);
-					
-					finish();
-				}
+		
+		new Handler().postDelayed(new Runnable() {
+
+			public void run() {
+				Intent intent = new Intent(SplashActivity.this, SaigonBus.class);
+				startActivity(intent);
 				
-			}, SPLASH_DISPLAY_LENGHT);
+				finish();
+			}
+			
+		}, SPLASH_DISPLAY_LENGHT);
 	}
 }

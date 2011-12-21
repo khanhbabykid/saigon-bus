@@ -2,6 +2,7 @@ package cse.it;
 
 import java.util.ArrayList;
 
+import cse.it.data.BusStation;
 import cse.it.data.TuyenXe;
 import cse.it.parse.Downloader;
 import cse.it.parse.HttpParse;
@@ -42,8 +43,14 @@ public class SaigonBus extends TabActivity implements OnTabChangeListener {
 		homeScreenInstance = this;
 		
 		ParsedData temp = new ParsedData();
+		if (Def.isConnectionAvailable(this)) {
+			Downloader.getData();
+		}
+		else{
+			ToastUtil.show(this, "No interner");
+		}
 		
-		Downloader.getData();
+//		Downloader.getDataStationList();
 		tabHost = getTabHost();
 
 		tabHost.getTabWidget().setDividerDrawable(R.drawable.tab_divider);
@@ -83,11 +90,11 @@ public class SaigonBus extends TabActivity implements OnTabChangeListener {
 	}
 
 	public void addTabTrip() {
-
+		
 		tabviewTrip = createTabView(tabHost.getContext(), getString(R.string.trips),
 				R.drawable.tripsselected_tab);
 		TabSpec tabTrip = tabHost.newTabSpec(getString(R.string.trips)).setIndicator(tabviewTrip)
-				.setContent(new Intent(this, StationBus.class));
+				.setContent(new Intent(this, TramXe.class));
 		tabHost.addTab(tabTrip);
 	}
 
@@ -96,7 +103,7 @@ public class SaigonBus extends TabActivity implements OnTabChangeListener {
 		tabviewTools = createTabView(tabHost.getContext(), getString(R.string.tools),
 				R.drawable.toolsselected_tab);
 		TabSpec tabTrip = tabHost.newTabSpec(getString(R.string.tools)).setIndicator(tabviewTools)
-				.setContent(new Intent(this, StationBus.class));
+				.setContent(new Intent(this, Vitri.class));
 		tabHost.addTab(tabTrip);
 	}
 
@@ -105,7 +112,7 @@ public class SaigonBus extends TabActivity implements OnTabChangeListener {
 				R.drawable.profile_tab);
 
 		TabSpec tabTrip = tabHost.newTabSpec(getString(R.string.profile)).setIndicator(tabviewProfiles)
-				.setContent(new Intent(this, StationBus.class));
+				.setContent(new Intent(this, TimDuong.class));
 		tabHost.addTab(tabTrip);
 	}
 
