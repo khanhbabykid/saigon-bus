@@ -21,6 +21,9 @@ REFERENCES Road (RoadId)
 ON UPDATE CASCADE
 ON DELETE CASCADE;
 
+ALTER TABLE RoadSession ADD COLUMN PositionLower GEOGRAPHY ( POINT ,4326);
+ALTER TABLE RoadSession ADD COLUMN PositionUpper GEOGRAPHY ( POINT ,4326);
+
 CREATE TABLE BusStation(
 ID UUID PRIMARY KEY,
 RoadSessionID UUID,
@@ -56,7 +59,8 @@ ON DELETE CASCADE;
 CREATE TABLE IntermediatePoint(
 ID UUID PRIMARY KEY,
 BusMovementID UUID,
-Position GEOGRAPHY ( POINT ,4326)
+Position GEOGRAPHY ( POINT ,4326),
+OrderNumber Integer
 );
 ALTER TABLE IntermediatePoint ADD  CONSTRAINT FK_IntermediatePoint_BusMovement FOREIGN KEY(BusMovementID)
 REFERENCES BusMovement (ID)
